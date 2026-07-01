@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         fetch-depth: 0
@@ -15,8 +15,8 @@ jobs:
   spelling:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: crate-ci/typos@v1.46.0
+    - uses: actions/checkout@v7
+    - uses: crate-ci/typos@v1.48.0
 
   generate-matrix:
     # https://stackoverflow.com/questions/59977364
@@ -25,7 +25,7 @@ jobs:
     outputs:
         matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         fetch-depth: 0
@@ -47,7 +47,7 @@ jobs:
     name: ${{ matrix.name }}
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         fetch-depth: 0
@@ -74,7 +74,7 @@ jobs:
 
     - name: tmate debug
       if: ${{ !cancelled() && runner.debug }}
-      uses: mxschmitt/action-tmate@v3.23
+      uses: mxschmitt/action-tmate@v3.24
 
     - name: annotate errors
       if: failure() || cancelled()
@@ -83,7 +83,7 @@ jobs:
 
     - name: coverage report
       if: success() && matrix.coverage
-      uses: codecov/codecov-action@v6
+      uses: codecov/codecov-action@v7
 
     - name: create release
       id: create_release
